@@ -1,0 +1,26 @@
+# Parametros para SnakeGame
+
+colors:
+  black : [0, 0, 0]
+  white : [255, 255, 255]
+  red : [255, 0, 0]
+  green : [0, 255, 0]
+  blue : [0, 0, 255]
+
+sizes:
+  block : 50
+  # El maximo debe ser de 500 x 500
+  game : [500, 500]
+  window : [700, 500]
+
+snake:
+  body_color: green
+  tail_color: red
+
+game:
+  speed: 15
+
+ai:
+  enable: true
+  package: ai.hamiltonian_cicle
+  function : hamiltonian_cicle
