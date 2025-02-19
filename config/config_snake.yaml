@@ -22,5 +22,5 @@ game:
 
 ai:
   enable: true
-  package: ai.hamiltonian_cicle
-  function : hamiltonian_cicle
+  package: ai.basic_algorithm
+  function : basic_ai

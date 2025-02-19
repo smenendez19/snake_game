@@ -1,4 +1,7 @@
+# Modules
+
 import random
+
 
 # Algoritmo de AI (basico)
 def basic_ai(data):
@@ -26,12 +29,7 @@ def basic_ai(data):
         return possible_moves
 
     def priorize_food(data, my_head):
-        distance_food = {
-            "UP" : None,
-            "DOWN" : None,
-            "LEFT" : None,
-            "RIGHT" : None
-        }
+        distance_food = {"UP": None, "DOWN": None, "LEFT": None, "RIGHT": None}
         for food_pos in data["food_position"]:
             if my_head[0] < food_pos[0] and my_head[1] == food_pos[1]:
                 if distance_food["RIGHT"] is None or distance_food["RIGHT"] > food_pos[0] - my_head[0]:
@@ -56,25 +54,25 @@ def basic_ai(data):
     def avoid_body(my_head, my_body, possible_moves):
         if len(my_body) < 3:
             return possible_moves
-        my_body_parts = my_body[:len(my_body) - 1]
+        my_body_parts = my_body[: len(my_body) - 1]
         for body_parts in my_body_parts:
-            if  body_parts[0] == my_head[0] - data["block_size"] and body_parts[1] == my_head[1]:
+            if body_parts[0] == my_head[0] - data["block_size"] and body_parts[1] == my_head[1]:
                 if "LEFT" in possible_moves:
                     possible_moves.remove("LEFT")
-            if  body_parts[0] == my_head[0] + data["block_size"] and body_parts[1] == my_head[1]:
+            if body_parts[0] == my_head[0] + data["block_size"] and body_parts[1] == my_head[1]:
                 if "RIGHT" in possible_moves:
                     possible_moves.remove("RIGHT")
-            if  body_parts[0] == my_head[0] and body_parts[1] == my_head[1] + data["block_size"]:
+            if body_parts[0] == my_head[0] and body_parts[1] == my_head[1] + data["block_size"]:
                 if "DOWN" in possible_moves:
                     possible_moves.remove("DOWN")
-            if  body_parts[0] == my_head[0] and body_parts[1] == my_head[1] - data["block_size"]:
+            if body_parts[0] == my_head[0] and body_parts[1] == my_head[1] - data["block_size"]:
                 if "UP" in possible_moves:
                     possible_moves.remove("UP")
         return possible_moves
 
     def choose_move(data):
-        my_head = data["snake_body"][-1]  
-        my_body = data["snake_body"] 
+        my_head = data["snake_body"][-1]
+        my_body = data["snake_body"]
         possible_moves = ["UP", "LEFT", "RIGHT", "DOWN"]
         board_height = data["board_size"][0]
         board_width = data["board_size"][1]
@@ -111,7 +109,14 @@ def basic_ai(data):
             move = last_move
         else:
             move = random.choice(possible_moves)
-        
-        #print(possible_moves, move, data["snake_body"])
-        return move
+
+        initial_move_letter = {
+            "UP": "U",
+            "DOWN": "D",
+            "LEFT": "L",
+            "RIGHT": "R",
+        }
+
+        return initial_move_letter[move]
+
     return choose_move(data)

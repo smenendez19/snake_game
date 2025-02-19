@@ -1,5 +1,6 @@
 import random
 
+
 class Food:
     def __init__(self, x, y, width, height, food_image, block_size):
         self.x = x
@@ -8,7 +9,7 @@ class Food:
         self.height = height
         self.block_size = block_size
         self.food_image = food_image
-    
+
     def possible_placements(self, body, width, height):
         possible_placemments = []
         for x in range(0, width, self.block_size):
@@ -16,7 +17,7 @@ class Food:
                 if [x, y] not in body:
                     possible_placemments.append([x, y])
         return possible_placemments
-    
+
     def set_food_position(self, body, width, height):
         possible_placemments = self.possible_placements(body, width, height)
         self.x, self.y = random.choice(possible_placemments)
