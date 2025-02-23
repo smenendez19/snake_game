@@ -7,7 +7,7 @@ import pygame
 import yaml
 
 # AI
-from ai.basic_algorithm import basic_ai
+from ai.basic_algorithm import basic_algorithm
 from ai.hamiltonian_cicle import hamiltonian_cicle
 
 # Clases
@@ -143,8 +143,12 @@ class SnakeGame:
     def loop_game(self, snake, ai_function, speed, data_state={}):
         self.count_food = 0
 
+        # Snake player position
         snake_player = snake
-        snake_player.set_start_position(self.width_game // 2, self.height_game // 2)
+        start_pos_width = round(random.randrange(self.block, self.width_game - (self.block * 2)) / self.block) * self.block
+        start_pos_height = round(random.randrange(self.block, self.height_game - (self.block * 2)) / self.block) * self.block
+        snake_player.set_start_position(start_pos_height, start_pos_width)
+        snake_player.add_body(start_pos_height - 1, start_pos_width)
 
         food_block = Food(
             round(random.randrange(0, self.width_game - self.block) / self.block) * self.block,
@@ -166,10 +170,14 @@ class SnakeGame:
             data_state["snake_tail"] = snake_player.body[0]
             data_state["food_count"] = self.count_food
             data_state["food_position"] = [(food_block.x, food_block.y)]
-            data_state["STATUS"] = "PLAYING"
             data_state["direction"] = snake_player.direction
 
-            print(data_state)
+            if self.pause:
+                data_state["STATUS"] = "PAUSE"
+            else:
+                data_state["STATUS"] = "PLAYING"
+
+            print("Debug data state:", data_state)
 
             # Eventos de teclado o IA
             if ai_function is None:
@@ -180,7 +188,13 @@ class SnakeGame:
                 if key == "SPACE":
                     self.pause = not self.pause
                 if not self.pause and key is not None:
-                    snake_player.move_snake(key)
+                    opposite_dicc = {"R": "L", "L": "R", "U": "D", "D": "U"}
+                    if key != opposite_dicc[snake_player.direction]:
+                        snake_player.move_snake(key)
+                    else:
+                        snake_player.move_snake(snake_player.direction)
+                else:
+                    snake_player.move_snake(snake_player.direction)
             else:
                 key = self.get_events()
                 if key == "QUIT":
@@ -322,8 +336,9 @@ if __name__ == "__main__":
     )
     ai_snake = config["ai"]["enable"]
     if ai_snake:
+        print("AI Enabled")
         ai_module = __import__(config["ai"]["package"], fromlist=[config["ai"]["function"]])
         ai_function = getattr(ai_module, config["ai"]["function"])
         SnakeGame(ai_snake=ai_snake, ai_function=ai_function, config=config, snake=snake)
     else:
-        SnakeGame(ai_snake=ai_snake, config=config, snake=snake)
+        SnakeGame(config=config, snake=snake)

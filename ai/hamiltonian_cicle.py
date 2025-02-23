@@ -1,4 +1,3 @@
-# Ciclo Hamiltoniano
 def hamiltonian_cicle(data):
     current_block = (
         data["snake_head"][0] // data["block_size"],

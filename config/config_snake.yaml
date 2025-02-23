@@ -18,9 +18,8 @@ snake:
   tail_color: red
 
 game:
-  speed: 15
-
+  speed: 25
 ai:
   enable: true
-  package: ai.basic_algorithm
-  function : basic_ai
+  package: ai.battlesnake_api
+  function : battlesnake_api

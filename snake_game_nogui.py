@@ -4,7 +4,7 @@ import random
 import pygame
 
 # AI
-from ai.basic_algorithm import basic_ai
+from ai.basic_algorithm import basic_algorithm
 from ai.hamiltonian_cicle import hamiltonian_cicle
 
 # Clases
@@ -45,19 +45,15 @@ class SnakeGame:
         self.snake.set_start_position(self.width_game // 2, self.height_game // 2)
 
         food_block = Food(
-            round(random.randrange(0, self.width_game - self.block) / self.block)
-            * self.block,
-            round(random.randrange(0, self.height_game - self.block) / self.block)
-            * self.block,
+            round(random.randrange(0, self.width_game - self.block) / self.block) * self.block,
+            round(random.randrange(0, self.height_game - self.block) / self.block) * self.block,
             self.block,
             self.block,
             None,
             self.block,
         )
 
-        food_block.set_food_position(
-            self.snake.body, self.width_game, self.height_game
-        )
+        food_block.set_food_position(self.snake.body, self.width_game, self.height_game)
 
         self.data_state = {
             "board_size": (self.width_game, self.height_game),
@@ -90,10 +86,8 @@ class SnakeGame:
         self.data_state["status"] = "PLAYING"
 
         food_block = Food(
-            round(random.randrange(0, self.width_game - self.block) / self.block)
-            * self.block,
-            round(random.randrange(0, self.height_game - self.block) / self.block)
-            * self.block,
+            round(random.randrange(0, self.width_game - self.block) / self.block) * self.block,
+            round(random.randrange(0, self.height_game - self.block) / self.block) * self.block,
             self.block,
             self.block,
             None,
@@ -124,13 +118,9 @@ class SnakeGame:
         # Get food
         if self.snake.x == self.snake.x and self.snake.y == self.snake.y:
             self.count_food += 1
-            possible_placemments = food_block.possible_placements(
-                self.snake.body, self.width_game, self.height_game
-            )
+            possible_placemments = food_block.possible_placements(self.snake.body, self.width_game, self.height_game)
             if len(possible_placemments) > 0:
-                food_block.set_food_position(
-                    self.snake.body, self.width_game, self.height_game
-                )
+                food_block.set_food_position(self.snake.body, self.width_game, self.height_game)
             else:
                 self.run_game = False
                 self.data_state["status"] = "WINNER"
@@ -171,10 +161,8 @@ class SnakeGame:
         snake_player.set_start_position(self.width_game // 2, self.height_game // 2)
 
         food_block = Food(
-            round(random.randrange(0, self.width_game - self.block) / self.block)
-            * self.block,
-            round(random.randrange(0, self.height_game - self.block) / self.block)
-            * self.block,
+            round(random.randrange(0, self.width_game - self.block) / self.block) * self.block,
+            round(random.randrange(0, self.height_game - self.block) / self.block) * self.block,
             self.block,
             self.block,
             None,
@@ -202,7 +190,7 @@ class SnakeGame:
 
             data_state["move"] = predicted_move
 
-            print(data_state)
+            print("Debug data state:", data_state)
 
             # Body collide
             for body in snake_player.body[: len(snake_player.body) - 1]:
@@ -223,13 +211,9 @@ class SnakeGame:
             # Get food
             if snake_player.x == food_block.x and snake_player.y == food_block.y:
                 self.count_food += 1
-                possible_placemments = food_block.possible_placements(
-                    snake_player.body, self.width_game, self.height_game
-                )
+                possible_placemments = food_block.possible_placements(snake_player.body, self.width_game, self.height_game)
                 if len(possible_placemments) > 0:
-                    food_block.set_food_position(
-                        snake_player.body, self.width_game, self.height_game
-                    )
+                    food_block.set_food_position(snake_player.body, self.width_game, self.height_game)
                 else:
                     self.run_game = False
                     data_state["status"] = "WINNER"

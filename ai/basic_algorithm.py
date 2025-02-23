@@ -3,8 +3,7 @@
 import random
 
 
-# Algoritmo de AI (basico)
-def basic_ai(data):
+def basic_algorithm(data):
     def avoid_my_neck(data, possible_moves):
         dir = data["direction"]
         if dir == "R":
